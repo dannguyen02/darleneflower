@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Darlene Custom Order</title>
+<meta name="description" content="Tell Darlene Flower Shop your flower idea and get a custom quote.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+:root{
+  --bg:#fbf6f7; --card:#ffffff; --fg:#2b2326; --muted:#7d6e73; --line:#ecdfe3;
+  --petal:#d9839a; --stem:#3f5e4a; --stem-soft:#e6efe8; --warn:#b4534f;
+  --display:"Italiana", Georgia, serif; --body:"DM Sans", system-ui, sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#1b1719; --card:#251f22; --fg:#f3e9ec; --muted:#a8979d; --line:#3a3135;
+  --petal:#e89aaf; --stem:#9cc3a8; --stem-soft:#26352b; --warn:#e08883; color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45;
+  padding:28px max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left))}
+.wrap{max-width:600px;margin:0 auto;display:grid;gap:26px}
+header{text-align:center;display:grid;gap:6px}
+h1{font-family:var(--display);font-weight:400;font-size:52px;letter-spacing:.04em;margin:0;color:var(--petal);line-height:1}
+.sub{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted)}
+.intro{margin:8px auto 0;max-width:40ch;color:var(--muted);text-wrap:balance}
+form{display:grid;gap:26px}
+h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:600}
+section{display:grid;gap:12px}
+.field{display:grid;gap:4px;min-width:0;border:0;margin:0;padding:0}
+.field>span,.field>legend{font-size:14px;font-weight:500;padding:0;margin-bottom:4px}
+.field i{font-style:normal;color:var(--petal)}
+input[type=text],input[type=tel],input[type=date],input[type=number],select,textarea{
+  font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px;width:100%;appearance:none}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--petal);outline-offset:1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips label{position:relative}
+.chips input{position:absolute;opacity:0;inset:0}
+.chips span{display:inline-block;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 13px;font-size:14px;cursor:pointer}
+.chips input:checked+span{background:var(--stem);border-color:var(--stem);color:var(--card)}
+.chips input:focus-visible+span{outline:2px solid var(--petal);outline-offset:1px}
+.money{position:relative}
+.money::before{content:"$";position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.money input{padding-left:24px}
+.file{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:14px;display:grid;gap:8px}
+.file img{max-width:100%;max-height:240px;border-radius:8px;object-fit:cover}
+.hint{font-size:13px;color:var(--muted);margin:0}
+button[type=submit]{border:0;border-radius:12px;padding:16px;font:inherit;font-size:17px;font-weight:600;cursor:pointer;background:var(--stem);color:var(--card);width:100%}
+button[type=submit]:disabled{opacity:.6}
+.honey{display:none}
+.thanks{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 20px;text-align:center;display:grid;gap:10px}
+.thanks h2{font-family:var(--display);font-size:34px;letter-spacing:.02em;text-transform:none;color:var(--petal);font-weight:400}
+.thanks p{margin:0}
+.thanks a{color:var(--stem);font-weight:600}
+[hidden]{display:none!important}
+@media (max-width:420px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Darlene</h1>
+    <div class="sub">Flower Shop</div>
+    <p class="intro">Tell me your flower idea and I'll message you with a custom quote based on today's flowers.</p>
+  </header>
+
+  <div class="thanks" id="thanks" hidden>
+    <h2>Thank you!</h2>
+    <p>Your idea is on its way to Darlene 🌸</p>
+    <p>I'll message you with your quote soon. Follow <a href="https://instagram.com/wraps.by.darlene" target="_blank" rel="noopener">@wraps.by.darlene</a> so my DM doesn't land in your message requests.</p>
+    <p><a href="./">Send another order</a></p>
+  </div>
+
+  <form id="order" action="https://formsubmit.co/darleneworkshop@gmail.com" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" id="subj" value="New Darlene flower order">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" id="next">
+    <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off">
+
+    <section>
+      <h2>About you</h2>
+      <div class="two">
+        <label class="field"><span>Your name <i>*</i></span><input type="text" name="Name" id="name" required autocomplete="name"></label>
+        <label class="field"><span>Instagram handle <i>*</i></span><input type="text" name="Instagram" required placeholder="@yourname" autocapitalize="off"></label>
+        <label class="field"><span>Phone (optional)</span><input type="tel" name="Phone" autocomplete="tel"></label>
+        <label class="field"><span>Date needed <i>*</i></span><input type="date" name="Date needed" id="date" required></label>
+      </div>
+      <fieldset class="field"><legend>Pickup or delivery</legend>
+        <div class="chips">
+          <label><input type="radio" name="Pickup or delivery" value="Pickup" checked><span>Pickup</span></label>
+          <label><input type="radio" name="Pickup or delivery" value="Delivery" id="deliv"><span>Delivery</span></label>
+        </div>
+      </fieldset>
+      <label class="field" id="addrWrap" hidden><span>Delivery address or city</span><input type="text" name="Delivery address" id="addr"></label>
+    </section>
+
+    <section>
+      <h2>Your idea</h2>
+      <fieldset class="field"><legend>Occasion</legend><div class="chips" data-name="Occasion"
+        data-opts="Birthday|Anniversary|Graduation|Valentine's|Mother's Day|Wedding|Sympathy|Just because|Other"></div></fieldset>
+      <fieldset class="field"><legend>Style</legend><div class="chips" data-name="Style"
+        data-opts="Wrapped bouquet|Vase arrangement|Flower box|Basket|Single stem|Not sure"></div></fieldset>
+      <fieldset class="field"><legend>Size</legend><div class="chips" data-name="Size"
+        data-opts="Small|Medium|Large|Extra large|Not sure"></div></fieldset>
+      <div class="two">
+        <label class="field"><span>Colors</span><input type="text" name="Colors" placeholder="Soft pink and white"></label>
+        <label class="field"><span>Budget</span><div class="money"><input type="number" name="Budget" min="0" step="5" inputmode="numeric" placeholder="80"></div></label>
+      </div>
+      <label class="field"><span>Flowers you love or want to avoid</span><input type="text" name="Flowers" placeholder="Roses and baby's breath, no lilies"></label>
+      <label class="field"><span>Describe your idea <i>*</i></span>
+        <textarea name="Idea" required placeholder="Heart shaped bouquet for our anniversary, soft and romantic with a ribbon"></textarea></label>
+      <div class="field"><span>Inspiration photo (optional)</span>
+        <div class="file">
+          <input type="file" name="Inspiration photo" id="photo" accept="image/*">
+          <img id="prev" alt="Your inspiration photo" hidden>
+          <p class="hint">Photos up to 10 MB.</p>
+        </div>
+      </div>
+    </section>
+
+    <button type="submit" id="send">Send my order</button>
+    <p class="hint" style="text-align:center;margin-top:-14px">Your order goes straight to Darlene. You may be asked to tap a quick "I'm not a robot" check.</p>
+  </form>
+</div>
+
+<script>
+// Build chip options
+document.querySelectorAll(".chips[data-opts]").forEach(box=>{
+  box.innerHTML=box.dataset.opts.split("|").map(o=>
+    `<label><input type="radio" name="${box.dataset.name}" value="${o}"><span>${o}</span></label>`).join("");
+});
+// Thank you screen after FormSubmit redirects back
+const here=location.href.split("?")[0].split("#")[0];
+document.getElementById("next").value=here+"?sent=1";
+if(new URLSearchParams(location.search).get("sent")==="1"){
+  document.getElementById("order").hidden=true;
+  document.getElementById("thanks").hidden=false;
+}
+// Earliest date is today
+const t=new Date(),pad=n=>String(n).padStart(2,"0");
+document.getElementById("date").min=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+// Show address only for delivery
+document.querySelectorAll('input[name="Pickup or delivery"]').forEach(r=>r.addEventListener("change",()=>{
+  const d=document.getElementById("deliv").checked;
+  document.getElementById("addrWrap").hidden=!d;document.getElementById("addr").required=d;
+}));
+// Photo preview and size check
+document.getElementById("photo").addEventListener("change",e=>{
+  const f=e.target.files[0],img=document.getElementById("prev");
+  if(!f){img.hidden=true;return}
+  if(f.size>10*1024*1024){alert("That photo is over 10 MB. Please pick a smaller one.");e.target.value="";img.hidden=true;return}
+  img.src=URL.createObjectURL(f);img.hidden=false;
+});
+// Subject line with customer name
+document.getElementById("order").addEventListener("submit",()=>{
+  const n=document.getElementById("name").value.trim();
+  document.getElementById("subj").value="New Darlene flower order"+(n?" from "+n:"");
+  const b=document.getElementById("send");b.disabled=true;b.textContent="Sending...";
+});
+</script>
+</body>
+</html>
